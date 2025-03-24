@@ -31,8 +31,6 @@
 
 .memberCard {
   padding: 15px;
-  border-radius: 10px;
-  border-bottom: 2px solid black;
   width: 180px;
   display: flex;
   flex-direction: column;
