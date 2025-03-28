@@ -3,3 +3,60 @@
   width: 100vw;
   height: 100vh;
 }
+
+.valueContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  padding: 20px;
+}
+
+.valuesItem {
+  padding: 20px;
+  margin: 0 20px;
+  border-bottom: 1.5px solid var(--primary-text-color);
+}
+
+.crewDescription {
+  width: 60%;
+  margin: 20px 0;
+}
+
+.crewMembers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.memberCard {
+  padding: 15px;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partnerDescription {
+  width: 50%;
+}
+
+.memberImg {
+  object-fit: contain;
+  width: 200px;
+  height: 200px;
+}
+
+.partnersLogos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+  padding: 5px;
+}
+
+.partnerImg {
+  object-fit: contain;
+  width: 150px;
+  height: 150px;
+}
