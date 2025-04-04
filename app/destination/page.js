@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import styles from "@/components/destination/destination.module.css";
 import { AddWishlistItem } from "@/components/destination/AddWishlistItem";
-import PlanetCard from "./PlanetCard";
-import PlanetWishlistItem from "./PlanetWishlistItem";
+import PlanetCard from "../../components/destination/PlanetCard";
+import PlanetWishlistItem from "../../components/destination/PlanetWishlistItem";
 
 const allPlanets = [
   {
@@ -40,6 +40,7 @@ const allPlanets = [
 
 export const Destinations = () => {
   const [selectedPlanets, onAddPlanet] = useState([]);
+  const [wishlists, setWishlists] = useState([]);
 
   let isPlanetSelected = false;
   let numberOfPlanets = selectedPlanets.length;
@@ -60,7 +61,43 @@ export const Destinations = () => {
         return [...prevSelected, name];
       }
     });
+    console.log(selectedPlanets);
   };
+
+  const handleAddWishlistItem = (wishlistName, thembnail) => {
+    if (!wishlistName.trim()) {
+      console.error("Wishlist name cannot be empty!");
+      return;
+    }
+    const newWishlistItem = {
+      id: wishlists.length + 1,
+      wishlistName: wishlistName,
+      wishlistPlanets: [...selectedPlanets],
+      thumbnail: thembnail,
+    };
+
+    setWishlists((prevWishlists) => {
+      const esixtingWishlist = prevWishlists.find(
+        (item) => item.wishlistName.toLowerCase() === wishlistName.toLowerCase()
+      );
+      if (esixtingWishlist) {
+        alert("Wishlist name already exists!");
+        return prevWishlists;
+      }
+      return [...prevWishlists, newWishlistItem];
+    });
+    onAddPlanet([]);
+  };
+
+  const removeFromWishlist = (name) => {
+    setWishlists((prevWishlists) =>
+      prevWishlists.filter(
+        (wishlist) => wishlist.wishlistName.toLowerCase() !== name.toLowerCase()
+      )
+    );
+  };
+
+  console.log("Current selected planets:", selectedPlanets);
 
   return (
     <div className="fullBGpicture">
@@ -76,30 +113,34 @@ export const Destinations = () => {
           ) : (
             <p>You have {numberOfPlanets} in your wishlist</p>
           )}
-          <b>List coming soon after lesson 3!</b>
+
+          {/* <b>List coming soon after lesson 3!</b> */}
 
           {/* STOP! - this is for week 3!*/}
           {/* TASK - React 1 week 3 */}
           {/* Import the AddWishlistItem react component */}
-          {/* <AddWishlistItem /> */}
+          <AddWishlistItem onAddWishlistItem={handleAddWishlistItem} />
           {/* TASK - React 1 week 3 */}
           {/* Convert the list, so it is using selectedPlanets.map() to display the items  */}
           {/* Implement the "REMOVE" function */}
           {/* uncomment the following code snippet: */}
-          {/* 
+
           <h3>Your current wishlist</h3>
           <div className={styles.wishlistList}>
-            <PlanetWishlistItem 
+            {wishlists.map((wishlist) => (
+              <PlanetWishlistItem
+                key={wishlist.id}
+                name={wishlist.wishlistName}
+                onRemove={() => removeFromWishlist(wishlist.wishlistName)}
+                thumbnail={wishlist.thumbnail}
+              />
+            ))}
+            {/* <PlanetWishlistItem
               name="europa"
-              onRemove={() => removeFromWishlist('europa')}
+              onRemove={() => removeFromWishlist("europa")}
               thumbnail="/destination/image-europa.png"
-            />
-            <PlanetWishlistItem 
-              name="europa"
-              onRemove={() => removeFromWishlist('europa')}
-              thumbnail="/destination/image-europa.png"
-            />
-          </div> */}
+            /> */}
+          </div>
         </section>
         <section className="card">
           <h2>Possible destinations</h2>
